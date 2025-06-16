@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  packages: write  # <-- Required to push to ghcr.io
 
 jobs:
   build:
@@ -26,7 +27,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ github.token }}
+          password: ${{ secrets.GITHUB_TOKEN }}  # <-- Use secrets for permissions context
 
       - name: Lowercase the repo name and username
         run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
@@ -34,8 +35,8 @@ jobs:
       - name: Build and push container image to registry
         uses: docker/build-push-action@v5
         with:
-          context: ./app              # ✅ Update this if your app folder name is different
-          file: ./app/Dockerfile      # ✅ Path to Dockerfile
+          context: ./app              # Update if your app folder name is different
+          file: ./app/Dockerfile      # Path to Dockerfile
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
 
