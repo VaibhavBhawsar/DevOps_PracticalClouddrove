@@ -10,7 +10,7 @@ on:
 
 permissions:
   contents: read
-  packages: write  # Required to push to ghcr.io
+  packages: write
 
 jobs:
   build:
