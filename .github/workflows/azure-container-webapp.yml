@@ -1,7 +1,8 @@
 name: Build and deploy a container to an Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: your-app-name  # ✅ Replace with your actual Azure Web App name
+  AZURE_WEBAPP_NAME: webapp-devops-prac-a45e7fbf
+ 
 
 on:
   push:
@@ -34,8 +35,8 @@ jobs:
       - name: Build and push container image to registry
         uses: docker/build-push-action@v5
         with:
-          context: ./myapp              # ✅ Update this if your app folder name is different
-          file: ./myapp/Dockerfile      # ✅ Path to Dockerfile
+          context: ./app              # ✅ Update this if your app folder name is different
+          file: ./app/Dockerfile      # ✅ Path to Dockerfile
           push: true
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
 
